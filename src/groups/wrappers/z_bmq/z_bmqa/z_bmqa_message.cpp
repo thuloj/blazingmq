@@ -119,9 +119,12 @@ int z_bmqa_Message__clone(const z_bmqa_Message* message_obj,
     const bmqa::Message* message_p = reinterpret_cast<const bmqa::Message*>(
         message_obj);
 
-    bmqa::Message* other_p = new bmqa::Message();
-    *other_p               = message_p->clone();
-    *other_obj             = reinterpret_cast<z_bmqa_Message*>(other_p);
+    //more precise way to clone, old way is commented out
+    bmqa::Message* other_p = message_p->clone();
+
+    // bmqa::Message* other_p = new bmqa::Message();
+    // *other_p               = message_p->clone();
+    // *other_obj             = reinterpret_cast<z_bmqa_Message*>(other_p);
 
     return 0;
 }
@@ -223,14 +226,6 @@ int z_bmqa_Message__ackStatus(const z_bmqa_Message* message_obj)
     return message_p->ackStatus();
 }
 
-// Add once we figure out how to handle Blobs in C
-// int z_bmqa_Message__getData(const z_bmqa_Message* message_obj, z_bdlbb_Blob*
-// blob) {
-//     using namespace BloombergLP;
-// const bmqa::Message* message_p = reinterpret_cast<const
-// bmqa::Message*>(message_obj);
-// }
-
 int z_bmqa_Message__getData(const z_bmqa_Message* message_obj, char** buffer)
 {
     using namespace BloombergLP;
@@ -243,8 +238,17 @@ int z_bmqa_Message__getData(const z_bmqa_Message* message_obj, char** buffer)
     ss << bdlbb::BlobUtilHexDumper(&data);
     bsl::string data_str         = ss.str();
     *buffer                      = new char[data_str.length() + 1];
+
+    for(int i = 0; i < data_str.length(); i++)
+    {
+        (*buffer)[i] = '0';
+    }
+
     (*buffer)[data_str.length()] = '\0';
-    strcpy(*buffer, data_str.c_str());
+    strncpy(*buffer, data_str.c_str(), data_str.length() + 1);
+
+
+
 
     return rc;
 }

@@ -32,8 +32,10 @@ static void test1_breathingTest()
     mwctst::TestHelper::printTestName("BREATHING TEST");
 
     z_bmqa_SessionEvent * obj;
-    z_bmqa_SessionEvent__create(&obj);
 
+    // Test create and delete
+    z_bmqa_SessionEvent__create(&obj);
+    z_bmqa_SessionEvent__delete(obj);
     
 }
 
