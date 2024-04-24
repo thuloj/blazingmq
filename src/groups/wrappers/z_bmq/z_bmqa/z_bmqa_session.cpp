@@ -6,6 +6,8 @@
 #include <z_bmqa_openqueuestatus.h>
 #include <z_bmqa_session.h>
 #include <z_bmqt_sessionoptions.h>
+#include <chrono> 
+#include <thread>
 
 z_bmqa_CustomSessionEventHandler::z_bmqa_CustomSessionEventHandler(
     z_bmqa_OnSessionEventCb onSessionEventCb,
@@ -299,6 +301,8 @@ int z_bmqa_Session__configureQueueSync(z_bmqa_Session*            session_obj,
 
     // Implement timeout
 
+    std::this_thread::sleep_for(std::chrono::milliseconds(timeoutMs));
+
     *status_p = session_p->configureQueueSync(queueId_p, *options_p);
     *status   = reinterpret_cast<z_bmqa_ConfigureQueueStatus*>(status_p);
     return 0;
@@ -316,6 +320,8 @@ int z_bmqa_Session__closeQueueSync(z_bmqa_Session*           session_obj,
     bmqa::CloseQueueStatus* status_p = new bmqa::CloseQueueStatus();
 
     // Implement timeout
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(timeoutMs));
 
     *status_p = session_p->closeQueueSync(queueId_p);
     *status   = reinterpret_cast<z_bmqa_CloseQueueStatus*>(status_p);
