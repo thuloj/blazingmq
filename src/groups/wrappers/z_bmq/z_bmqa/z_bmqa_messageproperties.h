@@ -292,11 +292,12 @@ const char* z_bmqa_MessageProperties__getPropertyAsString(
  * @param properties_obj A pointer to a const z_bmqa_MessageProperties object from which the property will be retrieved.
  * @param name The name of the property to retrieve.
  * @return Returns a null-terminated character array representing the binary string of the property.
- *         The caller is responsible for freeing this memory using free().
+ *         The caller is responsible for freeing this memory using free(). Length stores length of the binary data output.
  */
 const char* z_bmqa_MessageProperties__getPropertyAsBinary(
     const z_bmqa_MessageProperties* properties_obj, 
-    const char* name); 
+    const char* name, 
+    size_t *length); 
 
 /**
  * @brief Retrieves the value associated with a given property name as a boolean, or returns a default value if not found.
@@ -411,13 +412,14 @@ const char* z_bmqa_MessageProperties__getPropertyAsStringOr(
  * @param value A pointer to the default value to be returned if the property is not found.
  * @param size The size of the default value buffer.
  * @return Returns a pointer to a dynamically allocated buffer containing the binary representation of the property value or the default value.
- *         The caller is responsible for freeing this memory using free().
+ *         The caller is responsible for freeing this memory using free(). Length stores length of the binary data output.
  */
 const char* z_bmqa_MessageProperties__getPropertyAsBinaryOr(
     const z_bmqa_MessageProperties* properties_obj, 
     const char* name, 
     const char* value, 
-    int size); 
+    int size,
+    size_t *length); 
 
 #if defined(__cplusplus)
 }

@@ -136,7 +136,6 @@ int z_bmqa_MessageProperties__setPropertyAsInt64(
     return properties_p->setPropertyAsInt64(name_str,value); 
 }
 
-//needs rigorous testing to see if value conversion to bsl::string is needed, or we use the char* value 
 int z_bmqa_MessageProperties__setPropertyAsString(
     z_bmqa_MessageProperties* properties_obj, 
     const char* name, 
@@ -269,11 +268,10 @@ const char* z_bmqa_MessageProperties__getPropertyAsString(
     return propertyAsBSLString.c_str();
 }
 
-
-//docstring needs to include freeing cBinVec
 const char* z_bmqa_MessageProperties__getPropertyAsBinary(
     const z_bmqa_MessageProperties* properties_obj, 
-    const char* name) 
+    const char* name,
+    size_t *length) 
 {
     using namespace BloombergLP; 
 
@@ -381,7 +379,8 @@ const char* z_bmqa_MessageProperties__getPropertyAsBinaryOr(
     const z_bmqa_MessageProperties* properties_obj, 
     const char* name,
     const char* value,
-    int size) 
+    int size,
+    size_t *length) 
 {
     using namespace BloombergLP; 
 
